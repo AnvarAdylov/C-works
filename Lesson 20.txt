@@ -1,0 +1,77 @@
+Lesson 20. Section 5 Adylov Anvar
+1.
+#include <stdio.h>
+void stringCopy(char fromStr[], char toStr[]) {
+	int i = 0;
+	do {
+		toStr[i] = fromStr[i];
+		i = i + 1;
+	} while (fromStr[i] != '\0');
+	toStr[i] = '\0';
+}
+int main() {
+	char a[] = {"Whatever"}, b[20];
+	stringCopy(a, b);
+	printf("%s", b);
+}
+
+2.
+#include <stdio.h>
+_Bool areEqual(char str1[], char str2[]) {
+	int i = 0;
+	_Bool t = 1;
+	do {
+		if (str1[i] == str2[i]) {
+			t = 1;
+		} else {
+			t = 0;
+			}
+	i = i+1;
+	} while (str2[i] != '\0');
+	return t;
+}
+int main() {
+char a[] = {'j','i','m','\0'}, b[] = {'j','i','m','\0'};
+printf("%i", areEqual(a, b));
+} 
+
+3.	
+#include <stdio.h>
+void reverse(char fromStr[], char toStr[]) {
+	int i = 0, j = 0;
+	do {
+		i = i + 1;
+	} while (fromStr[i] != '\0');
+	do {
+	i = i-1;
+	toStr[j] = fromStr[i];
+	j = j+1;
+	} while (i>0);
+	toStr[j] = '\0';
+}
+int main() {
+	char a[] = {"Whatever"}, b[20];
+	reverse(a, b);
+	printf("%s", b);
+}
+	
+4.	
+#include <stdio.h>
+void concat(char str1[], char str2[], char resultStr[]) {
+	int i = 0, j = 0;
+	do {
+		resultStr[i] = str1[i];
+		i++;
+	} while (str1[i] != '\0');
+	do {
+	resultStr[i] = str2[j];
+	j++;
+	i++;
+	} while (str2[j] != '\0');
+	resultStr[i] = '\0';
+}
+int main() {
+	char a[] = {"Hello "}, b[] = {"me!"}, c[30];
+	concat(a, b, c);
+	printf("%s", c);
+}

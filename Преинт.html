@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<meta charset=utf-8>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			var geometry = new THREE.BoxGeometry( 600, 10, 300 );
+			var material = new THREE.MeshBasicMaterial( { color: 0x8c9a8c } );
+			var cube = new THREE.Mesh( geometry, material );
+			scene.add(cube);
+			
+			var geometry = new THREE.BoxGeometry( 10, 300, 10 );
+			var material = new THREE.MeshBasicMaterial( { color: 0x6b6b6b } );
+			var cube2 = new THREE.Mesh( geometry, material );
+			scene.add(cube2);
+			var geometry = new THREE.BoxGeometry( 10, 300, 10 );
+			var material = new THREE.MeshBasicMaterial( { color: 0x6b6b6b } );
+			var cube3 = new THREE.Mesh( geometry, material );
+			scene.add(cube3);
+			var geometry = new THREE.BoxGeometry( 10, 300, 10 );
+			var material = new THREE.MeshBasicMaterial( { color: 0x6b6b6b } );
+			var cube4 = new THREE.Mesh( geometry, material );
+			scene.add(cube4);
+			var geometry = new THREE.BoxGeometry( 10, 300, 10 );
+			var material = new THREE.MeshBasicMaterial( { color: 0x6b6b6b } );
+			var cube5 = new THREE.Mesh( geometry, material );
+			scene.add(cube5);
+			cube2.position.x = 300;
+			cube2.position.y = -150;
+			cube2.position.z = 100;
+			cube3.position.x = 300;
+			cube3.position.y = -150;
+			cube3.position.z = -100;
+			cube4.position.x = -300;
+			cube4.position.y = -150;
+			cube4.position.z = -100;
+			cube5.position.x = -300;
+			cube5.position.y = -150;
+			cube5.position.z = 100;
+			camera.position.z = 500;
+			camera.position.y = 100;
+			function render() {
+			requestAnimationFrame( render );
+
+			renderer.render( scene, camera );
+			}
+			render();
+		</script>
+	</body>
+</html>

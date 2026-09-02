@@ -1,0 +1,21 @@
+1. 
+ch1 = 'B'
+ch2 = 'Y'
+ch3 = 'A'
+ch4 = 'W'
+chp1 = &ch2
+chp2 = &ch4
+*chp1 = 'Y'
+*chp2 = 'W'
+2. 
+a = 11
+b = 20
+x = 97
+y = 88
+ip1 = &x
+ip2 = &b
+ipp = &b
+*ip1 = 97
+*ip2 = 20
+*ipp = 20
+**ipp = no sense

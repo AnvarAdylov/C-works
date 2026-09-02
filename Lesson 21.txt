@@ -1,0 +1,112 @@
+Section 5 Adylov Anvar
+Lesson 21
+1.
+#include <string.h>
+int main() {
+	char s[20];
+	int sum = 0;
+	FILE *infile;
+	infile = fopen("INPUT.txt", "r");
+	do {
+		fscanf(infile, "%s", s);
+		sum = sum + atoi(s);
+	} while (!feof(infile));
+	printf("%i", sum);
+	fclose(infile);
+	return 0;
+}
+
+
+2. IDE Microsoft Visual studio
+#include <string.h>
+#include <math.h>
+double Power(double x, int n) {
+	if (n == 0) {
+		return 1.00;
+	}
+	else if (n>0) {
+		return Power(x, n - 1)*x;
+	}
+	else if (n<0) {
+		return 1 / (Power(x, (-n) - 1)*x);
+	}
+}
+double strToDouble(char str[]) {
+	int i = 0, intValue, power = 0, n = 0;
+	double dValue, result = 0;
+	_Bool negative1 = 0, negative2 = 0;
+	if (str[i] == '-') {
+			negative1 = 1;
+			i++;
+		}
+	do {
+		if (str[i] >= '0' && str[i] <= '9') {
+			dValue = str[i] - '0';
+			result = result * 10 + dValue;
+		}
+		i++;
+		if (str[i] == '.') {
+			do {
+				if (str[i] >= '0' && str[i] <= '9') {
+					dValue = str[i] - '0';
+					result = result + dValue/Power(10, n);
+				}
+				n++;
+				if (str[i] == 'e') {
+					do {
+						i++;
+						if (str[i] == '-') {
+							negative2 = 1;
+							i++;
+						}
+						if (str[i] >= '0' && str[i] <= '9') {
+							intValue = str[i] - '0';
+							power = power * 10 + intValue;
+						}
+					} while (str[i] != '\0');
+					if (negative2 == 1) {
+						result = result / Power(10, power);
+					}
+					else {
+						result = result*Power(10, power);
+					}
+				}
+				i++;
+			} while (str[i] != '\0');
+		if (str[i] == 'e') {
+			do {
+				i++;
+				if (str[i] == '-') {
+					negative2 = 1;
+					i++;
+				}
+				if (str[i] >= '0' && str[i] <= '9') {
+					intValue = str[i] - '0';
+					power = power * 10 + intValue;
+					}
+			} while (str[i] != '\0');
+			if (negative2 == 1) {
+				result = result/Power(10, power);
+			}
+			else {
+				result = result*Power(10, power);
+			}
+
+		}
+		}
+		} while (str[i] != '\0');
+	if (negative1 == 1) {
+		result = -result;
+	}
+		return result;
+	}
+
+int main() {
+	
+		printf("%lf\n", strToDouble("123456")); 
+		printf("%lf\n", strToDouble("-123.456"));
+		printf("%lf\n", strToDouble("123.456e13"));
+		printf("%.20lf\n", strToDouble("123.456e-13"));
+		scanf("%i");
+	return 0;
+}

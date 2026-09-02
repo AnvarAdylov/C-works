@@ -1,0 +1,106 @@
+Lesson 11
+Section 5
+Adylov Anvar
+Task 1
+int main()
+{
+		char c;
+		FILE *infile;
+		FILE *outfile;
+		infile = fopen("Source.txt", "r");
+		outfile = fopen("Recepient.txt", "w");
+		if (infile == NULL || outfile == NULL) {
+			printf("Problem opening files.");
+			return 1;
+		}
+		printf("Files opened successfully.");
+		while (!feof(infile)) {
+			c = getc(infile);
+			putc(c, outfile);
+		} 
+		fclose(infile);
+		fclose(outfile);
+    return 0;
+}
+Task 2
+int main() {
+	int e;
+	printf("To exit the programm input the negative value: \n");
+	scanf("%i", &e);
+	while (e > 0) {
+		FILE *file1;
+		FILE *file2;
+		file1 = fopen("story.txt", "r");
+		file2 = fopen("values.txt", "r");
+		if (file1 == NULL || file2 == NULL) {
+			printf("Problem opening files.");
+			return 1;
+		}
+		printf("Files opened successfully. \n");
+		char word[100];
+		char x;
+		do {
+		do {
+			x = getc(file1);
+			if (x == '$') {
+				fscanf(file2, "%s", word);
+				printf("%s", word);
+			}
+			else {
+				putchar(x);
+			}
+		} while (!feof(file2));
+		} while (!feof(file1));
+
+		fclose(file1);
+		fclose(file2);
+
+		printf("To exit the programm input the negative value: \n");
+		scanf("%i", &e);
+	}
+	return 0;
+}
+Task 3
+int main() {
+	int e;
+	printf("To exit the programm input the negative value: \n");
+	scanf("%i", &e);
+	while (e > 0) {
+		printf("Write name for final document:");
+		char name[15];
+		scanf("%s", name);
+		FILE *file1;
+		FILE *file2;
+		FILE *result;
+		file1 = fopen("story.txt", "r");
+		file2 = fopen("values.txt", "r");
+		result = fopen(name, "w");
+		if (file1 == NULL || file2 == NULL) {
+			printf("Problem opening files.");
+			return 1;
+		}
+		printf("Files opened successfully. \n");
+		char word[100];
+		char x;
+		do {
+			do {
+				x = getc(file1);
+				if (x == '$') {
+					fscanf(file2, "%s", word);
+					fprintf(result, "%s", word);
+				}
+				else {
+					putc(x, result);
+				}
+			} while (!feof(file2));
+		} while (!feof(file1));
+
+		fclose(file1);
+		fclose(file2);
+		fclose(result);
+
+		printf("To exit the programm input the negative value: \n");
+		scanf("%i", &e);
+	}
+	return 0;
+}

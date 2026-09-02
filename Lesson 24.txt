@@ -1,0 +1,103 @@
+Section 5 Adylov Anvar
+Problems
+#include <stdio.h>
+void writeln(char letters[]) {
+ 
+	for (int i = 0;letters[i] != '\0';i++) {
+ 
+		putchar(letters[i]);
+	}
+ 	putchar('\n');
+}
+ 
+int main( ) {
+ 
+	char arr[] = "abcdef";
+	char *ptr = "ghijklmnop";
+ 
+	writeln(arr);
+	writeln(ptr);
+	writeln("qrstuv");
+ 
+	return 0;
+}
+2.
+1.
+#include <stdio.h>
+void stringCopy(char *fromStr, char *toStr) {
+	
+	while (*fromStr != '\0') {
+		*toStr = *fromStr;
+		fromStr++;
+		toStr++;
+	} 
+	*toStr = *fromStr;
+}
+int main() {
+	char a[] = {"Whatever"}, b[20];
+	stringCopy(a, b);
+	printf("%s", b);
+}
+
+
+2.
+#include <stdio.h>
+_Bool areEqual(char *str1, char *str2) {
+	_Bool t = 1;
+	while (*str2 != '\0') {
+		if (*str1 == *str2) {
+			t = 1;
+		} else {
+			t = 0;
+			}
+		str1++;
+		str2++;
+		} 
+	return t;
+}
+int main() {
+char a[] = {'j','i','m','\0'}, b[] = {'j','i','m','\0'};
+printf("%i", areEqual(a, b));
+} 
+
+3.	
+#include <stdio.h>
+void reverse(char *fromStr, char *toStr) {
+	char init;
+	init = *fromStr;
+	while (*fromStr != '\0') {
+		fromStr++;
+	}
+	while (*fromStr != init) {
+		fromStr--;
+	*toStr = *fromStr;
+	toStr++;
+	} 
+	*toStr = '\0';
+}
+int main() {
+	char a[] = {"Whatever"}, b[20];
+	reverse(a, b);
+	printf("%s", b);
+}
+	
+4.	
+#include <stdio.h>
+void concat(char *str1, char *str2, char *resultStr) {
+	do {
+		*resultStr = *str1;
+		str1++;
+		resultStr++;
+	} while (*str1 != '\0');
+	do {
+		*resultStr = *str2;
+		str2++;
+		resultStr++;
+	} while (*str2 != '\0');
+	*resultStr = '\0';
+}
+int main() {
+	char a[] = {"Hello "}, b[] = {"me!"}, c[30];
+	concat(a, b, c);
+	printf("%s", c);
+}

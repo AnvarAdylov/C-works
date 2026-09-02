@@ -1,0 +1,112 @@
+Section 5 Anvar Adylov
+Lesson 18
+1.
+#include <stdio.h>
+double power(double x, int n) {
+	if (n == 0) {
+	return 1.00;
+	} else if (n>0) {
+	return power(x, n-1)*x;
+	} else if (n<0) {
+	return 1/(power(x, (-n)-1)*x);
+	}
+}
+int main(void) {
+	printf("%lf", power(3, -4));
+	return 0;
+}
+2.
+#include <stdio.h>
+double power(double x, int n) {
+	if (n == 0) {
+	return 1.00;
+	} else if (n>0) {
+	return power(x, n-1)*x;
+	if (n%2 == 0) {
+	return power(x, n/2)*power(x, n/2);
+	}
+	} else if (n<0) {
+	return 1/(power(x, (-n)));
+	}
+}
+int main(void) {
+	printf("%lf", power(3, -4));
+	return 0;
+}
+3.
+#include <stdio.h>
+int addSubarray(int x[], int from, int to) {
+	if (from == to) {
+	return x[to];
+	}
+	return addSubarray(x, from + 1, to) + x[from];
+}
+int main(void) {
+	int arr[8] = {4, 3, -2, 7, 2, 5, -1, 0};
+	printf("%i \n", addSubarray(arr, 0, 7));
+	printf("%i \n", addSubarray(arr, 1, 5));
+	printf("%i \n", addSubarray(arr, 4, 6));
+	return 0;
+}
+4.
+#include <stdio.h>
+int findMax(int x[], int from, int to) {
+	if (from == to) {
+	return x[to];
+	}
+	if (findMax(x, from + 1, to) > x[from]) {
+	return findMax(x, from + 1, to);
+	}
+	if (findMax(x, from + 1, to) <= x[from]) {
+	return x[from];
+	}
+}
+int main(void) {
+	int arr[8] = {4, 3, -2, 7, 2, 5, -1, 0};
+	printf("%i", findMax(arr, 0, 7));
+	return 0;
+}
+5.
+#include <stdio.h>
+void printBinary(int n) {
+	if (n>0) {
+	printBinary(n/2);
+	}
+	printf("%i", n%2);
+	
+}
+int main(void) {
+printBinary(15);
+	return 0;
+}
+6.
+#include <stdio.h>
+double minValue(double arr[ ], int from, int to) {
+	if (from == to) {
+	return arr[to];
+	}
+	if (minValue(arr, from, to - 1) > arr[to]) {
+	return arr[to];
+	}
+	if (minValue(arr, from, to - 1) < arr[to]) {
+	return minValue(arr, from , to - 1);
+	}
+}
+int main(void) {
+	double arr[8] = {4, 3, -2, 7, 2, 5, -1, 0};
+	printf("%f", minValue(arr, 0, 7));
+}
+7.
+#include <stdio.h>
+double choose(int n, int k) {
+if (k == 1) {
+return n;
+} 
+if (n == k) {
+return 1;
+}
+return choose(n,k - 1)*((n+1-k)/k);
+}
+int main(void) {
+	printf("%lf", choose(52, 4));
+}

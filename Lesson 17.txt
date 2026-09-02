@@ -1,0 +1,102 @@
+1.  
+int minindex(int n, double arr[]) {
+	double min = 100000000;
+	int mini;
+	for (int i = 0; i<n; i++) {
+		if (min> arr[i]) {
+			min = arr[i];
+			mini = i;
+		}
+	}
+	return mini;
+}
+int main()
+{
+	double farr[7] = { 1.00, 2.00, 3.00, 4.00, 5.00, 6.00, 7.00 };
+	minindex(7, farr);
+	for (int i = 0; i < 7; i++)  {
+		printf("%lf", farr[i]);
+	}
+	return 0;
+}
+
+2.
+#include <stdio.h>
+double lowerDiagMax(int len, double arr[len][len]) {
+	double max = 0;
+	for (int i = 0; i<len; i++) {
+		for (int j = 0; j<=i; j++) {
+			if (max < arr[i][j]) {
+				max = arr[i][j];
+			}
+		}
+	}
+	return max;
+}
+int main()
+{
+	double arr[4][4] = { { 1, 0, 0, 0 }, { 2, 3, 0, 0 }, { 4, 5, 6, 0 }, {7,8,9,10} };
+	
+	for (int i = 0; i < 4; i++)  {
+		for (int j = 0; j < 4; j++) {
+			printf("%2lf ", arr[i][j]);
+		}
+		printf("\n");
+	}
+	printf("%lf", lowerDiagMax(4, arr));
+	return 0;
+}
+
+3.  
+#include <stdio.h>
+double arrevers(int n, double arr[n]) {
+	double rev[n];
+	for (int i = 0; i<n; i++) {
+		rev[n-1-i] = arr[i];
+	}
+	for (int i = 0; i<n;i++) {
+		arr[i] = rev[i];
+	}
+}
+int main()
+{
+	double farr[7] = { 1.00, 2.00, 3.00, 4.00, 5.00, 6.00, 7.00 };
+	
+	for (int i = 0; i < 7; i++)  {
+		printf("%2.2lf ", farr[i]);
+	}
+	printf("\n");
+	arrevers(7, farr);
+	for (int i = 0; i < 7; i++)  {
+		printf("%2.2lf ", farr[i]);
+	}
+	return 0;
+}
+
+4.
+#include <stdio.h>
+double transpose(int row, int col, double orig[row][col], double result[col][row]) {
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			result[i][j] = orig[j][i];
+		}
+	}
+}
+void printarr(int row, int col, double arr[row][col]) {
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			printf("%2.2lf ", arr[i][j]);
+		}
+		printf("\n");
+	}
+}
+int main()
+{
+	double arr[4][4] = { { 1, 0, 0, 0 }, { 2, 3, 0, 0 }, { 4, 5, 6, 0 }, { 7, 8, 9, 10 } };
+	double trans[4][4];
+	printarr(4, 4, arr);
+	transpose(4, 4, arr, trans);
+	printarr(4, 4, trans);
+	scanf("%c");
+	return 0;
+}

@@ -1,0 +1,85 @@
+Lesson 10
+Section 5
+Adylov Anvar
+Task 1
+#include <stdlio.h>
+
+int main()
+{
+	int e;
+		do {
+			char x;
+			int a = 0;
+			printf("Write a sentence \n");
+			do {
+				x = getchar();
+				if (x == 'a' || x == 'A' )
+				{
+					a = a + 1;
+				}
+
+			} while (x != '\n');
+			printf("The letter 'a' was occurrent %i times \n", a);
+			printf("Write negative value to quit \n");
+			scanf("%i", &e);
+		}
+	while (e >= 0);
+    return 0;
+}
+
+Task 2
+#include "stdafx.h"
+
+
+int main()
+{
+	int e;
+	do {
+		char x;
+		printf("Write a sentence \n");
+		do {
+			x = getchar();
+			if (x > 95 && x < 123) {
+				x = x - 32;
+			}
+			putchar(x);
+		} while (x != '\n');
+		
+		printf("Write negative value to quit \n");
+		scanf("%i", &e);
+	} while (e >= 0);
+	return 0;
+}
+
+Task 3 and 4
+
+
+#include "stdafx.h"
+
+int main()
+{
+	int e;
+	do {
+		char x;
+		int a = -1, b = 0;
+		printf("Write a sentence \n");
+		do {
+			x = getchar();
+			a = a + 1;
+			if (x == 32 || x == '\n') {
+				if (b < a) {
+					b = a;
+				}
+				if (a != 0) {
+					printf("%i\n", a);
+				}
+				a = -1;
+			} 
+			
+		} while (x != '\n');
+		printf("The longest word has %i letters \n", b);
+		printf("Write negative value to quit \n");
+		scanf("%i", &e);
+	} while (e >= 0);
+	return 0;
+}

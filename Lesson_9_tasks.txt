@@ -1,0 +1,147 @@
+// Section 5 Anvar Adylov
+// Lesson 9 task 1
+int main()
+{
+	int grade;
+	printf("This program calculates what grade in letter you have got, the maximum is 100 \nWrite your score here: \n");
+	scanf("%d", &grade);
+	if (grade > 100) {
+		printf("The value you written is unreasonable, please write another value \n");
+		}
+	if (grade >= 95) {
+		printf("Your grade for this course is A \n");
+		} else if (grade >= 90) 
+		{
+			printf("Your grade for this course is A- \n");
+		}
+		else if (grade >= 85) {
+			printf("Your grade for this course is B+ \n");
+		}
+		else if (grade >= 80) {
+			printf("Your grade for this course is B \n");
+		}
+		else if (grade >= 75) {
+			printf("Your grade for this course is B- \n");
+		}
+		else if (grade >= 70) {
+			printf("Your grade for this course is C+ \n");
+		}
+		else if (grade >= 65) {
+			printf("Your grade for this course is C \n");
+		}
+		else if (grade >= 60) {
+			printf("Your grade for this course is C- \n");
+		}
+		else if (grade >= 55) {
+			printf("Your grade for this course is D+ \n");
+		}
+		else if (grade >= 50) {
+			printf("Your grade for this course is D \n");
+		}
+		else {
+			printf("Your grade for this course is F \n");
+		}
+
+    return 0;
+}
+
+
+//Lesson 9 task 2
+int main()
+{
+	int e;
+	printf("To exit the programm input the negative value: \n");
+	scanf("%i", &e);
+		while (e > 0) {
+	int n, a = 0;
+	printf("Write your number here: \n");
+	scanf("%i", &n);
+	while (a < n) {
+		a = a + 1;
+		if (n%a == 0)
+		{
+			printf("%i is a divisor for your number \n", a);
+		}
+	}
+	printf("To exit the programm input the negative value: \n");
+	scanf("%i", &e);
+}
+    return 0;
+}
+
+
+//Lesson 9 task 3
+
+int main()
+{
+	int e;
+	do {
+		int d, m, y;
+		printf("Input year: \n");
+		scanf("%04i", &y);
+		if (y > 2000 && y < 2031) {
+
+			printf("Input month: \n");
+			scanf("%02i", &m);
+			if (m > 13 && m < 0) {
+				printf("Error!!!");
+				return 0;
+			}
+			else {
+				printf("Input day: \n");
+				scanf("%02i", &d);
+				if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+					if (d < 32 && d > 0) {
+						printf(" Today is %02i %02i %04i \n", d, m, y);
+					}
+					else {
+						printf("Error!!!");
+						return 0;
+					}
+				}
+				else if (m == 4 || m == 6 || m == 9 || m == 11) {
+					if (d < 31 && d > 0) {
+						printf(" Today is %02i %02i %04i \n", d, m, y);
+					}
+					else {
+						printf("Error!!!");
+						return 0;
+					}
+				}
+				else {
+					if (y % 4 == 0) {
+						if (d < 30 && d > 0) {
+							printf(" Today is %02i %02i %04i \n", d, m, y);
+						}
+						else {
+							printf("Error!!!");
+							return 0;
+						}
+					}
+					else {
+						if (d < 29 && d > 0) {
+							printf(" Today is %02i %02i %04i \n", d, m, y);
+						}
+						else {
+							printf("Error!!!");
+							return 0;
+						}
+					}
+				}
+			}
+
+
+		} else {
+			printf("Error!!!");
+			return 0;
+		}
+
+		
+		printf(" Write negative value to quit \n");
+		scanf("%i", &e);
+	} while (e > 0);
+
+    return 0;
+}
+
+

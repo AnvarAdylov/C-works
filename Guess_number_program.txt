@@ -1,0 +1,128 @@
+// Guess number program by Anvar Adylov and Zhanel Zhumadilova
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int e;
+	printf("To exit the programm input the negative value: \n");
+	scanf("%i", &e);
+	while (e > 0) {
+		int number = rand() % 10000;
+		int counter = 0, guess;
+		int n1, n2, n3, n4, g1, g2, g3, g4, w = 0, c = 0;
+		printf("%04i \n", number);
+		printf("Welcome \nThis is a game guess a number \nWrite here a four digit number and try to guess what number was selected \n");
+		do {
+			printf("Write here your prediction:");
+			scanf("%4d", &guess);
+			n1 = number / 1000;
+			n2 = (number / 100 - n1 * 10);
+			n3 = (number / 10 - n1 * 100 - n2 * 10);
+			n4 = (number - 1000 * n1 - 100 * n2 - n3 * 10);
+			g1 = guess / 1000;
+			g2 = (guess / 100 - g1 * 10);
+			g3 = (guess / 10 - g1 * 100 - g2 * 10);
+			g4 = (guess - 1000 * g1 - 100 * g2 - g3 * 10);
+			// This code for first guessed digit
+			if (g1 == n1) {
+				c = c + 1;
+			}
+			else if (g1 == n2 || g1 == n3 || g1 == n4) {
+				if (g1 == n2) {
+					if (g2 != n2) {
+						w = w + 1;
+						n2 = 10;
+					}
+				} else if (g1 == n3) {
+					if (g3 != n3) {
+						w = w + 1;
+						n3 = 10;
+					}
+				} else if (g1 == n4) {
+					if (g4 != n4) {
+						w = w + 1;
+						n4 = 10;
+					}
+				}
+			}
+			// This code for first guessed digit
+			if (g2 == n2) {
+				c = c + 1;
+			}
+			else if (g2 == n1 || g2 == n3 || g2 == n4) {
+				if (g2 == n1) {
+					if (g1 != n1) {
+						w = w + 1;
+						n1 = 10;
+					}
+				} else if (g2 == n3) {
+					if (g3 != n3) {
+						w = w + 1;
+						n3 = 10;
+					}
+				} else if (g2 == n4) {
+					if (g4 != n4) {
+						w = w + 1;
+						n4 = 10;
+					}
+				}
+			}
+			//
+			if (g3 == n3) {
+				c = c + 1;
+			}
+			else if (g3 == n1 || g3 == n2 || g3 == n4) {
+				if (g3 == n1) {
+					if (g1 != n1) {
+						w = w + 1;
+						n1 = 10;
+					}
+				} else	if (g3 == n2) {
+					if (g2 != n2) {
+						w = w + 1;
+						n2 = 10;
+					}
+				} else	if (g3 == n4) {
+					if (g4 != n4) {
+						w = w + 1;
+						n4 = 10;
+					}
+				}
+			}
+			//
+			if (g4 == n4) {
+				c = c + 1;
+			}
+			else if (g4 == n1 || g4 == n2 || g4 == n3) {
+				if (g4 == n1) {
+					if (g1 != n1) {
+						w = w + 1;
+						n1 = 10;
+					}
+				} else if (g4 == n2) {
+					if (g2 != n2) {
+						w = w + 1;
+						n2 = 10;
+					}
+				} else if (g4 == n3) {
+					if (g3 != n3 ) {
+						w = w + 1;
+						n3 = 10;
+					}
+				}
+			}
+			printf("Correct %i \nIn a wrong place %i \n", c, w);
+			c = 0;
+			w = 0;
+			// This part of code counting how many guesses were used
+			counter = counter + 1;
+			//
+		} while (number != guess);
+		printf("Congratulations you won in %i guesses \n", counter);
+		printf("To exit the programm input the negative value: \n");
+		scanf("%i", &e);
+	}
+		return 0;
+	}

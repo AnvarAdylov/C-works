@@ -1,0 +1,60 @@
+Lesson 25 section 5 Adylov Anvar
+2.
+#include <stdlib.h>
+typedef struct {
+	int rain;
+	double avertemp, avwind;
+} weather;
+void printtable(weather *arr, int n) {
+	for (int i = 0; i<n; i++)  {
+		printf("%i %lf %lf \n", arr->rain, arr->avertemp, arr->avwind);
+		arr++;
+	}
+}
+int* totalrain(weather *arr, int n) {
+	int *total = (int*)malloc(sizeof(int));
+	*total = 0;
+	for (int i = 0; i<n; i++)  {
+		*total = *total + arr->rain;
+		arr++;
+	}
+	return total;
+}
+double* lowtemp(weather *arr, int n) {
+	double *lowest = (double*)malloc(sizeof(double));
+	*lowest = 100;
+	for (int i = 0; i<n; i++)  {
+		if (*lowest>arr->avertemp) {
+			*lowest = arr->avertemp;
+		}
+		arr++;
+	}
+	return lowest;
+}
+double* averwind(weather *arr, int n) {
+	double *sum = (double*)malloc(sizeof(double));
+	double *average = (double*)malloc(sizeof(double));
+	*sum = 0;
+	for (int i = 0; i<n; i++)  {
+		*sum = *sum + arr->avwind;
+		arr++;
+	}
+	*average = *sum/12;
+	return average;
+}
+int main() {
+	int n = 12;
+	FILE *infile;
+	infile = fopen("astana.txt", "r");
+	weather *astana = (weather*)malloc(n*sizeof(weather));
+	for (int i = 0; i < n; i++) {
+		fscanf(infile, "%i %lf %lf \n", &astana->rain, &astana->avertemp, &astana->avwind);
+		astana++;
+	}
+	astana = astana - 12;
+	printtable(astana, n);
+	printf("%i \n", *totalrain(astana, n));
+	printf("%lf \n", *lowtemp(astana, n));
+	printf("%lf \n", *averwind(astana, n));
+	free(astana);
+}

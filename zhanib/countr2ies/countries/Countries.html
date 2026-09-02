@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251">
+		<title>Photo Viewer</title>
+
+		<script>
+			var egypt = ["egypt1.jpg", "egypt2.jpg", "egypt3.jpg"];
+			var australia = ["australia1.jpg", "australia2.jpg"];
+			var germany = ["germany1.jpg", "germany2.jpg", "germany3.jpg", "germany4.jpg"];
+			var usa = ["usa1.jpg", "usa2.jpg", "usa3.jpg", "usa4.jpg", "usa5.jpg"];
+			
+			var places = ["Egypt", "Australia", "Germany", "USA"];
+			var selectedCountry;
+			function changeTo(index) {
+			selectedCountry=index;
+			document.getElementById("place").innerHTML=places[selectedCountry];
+			if (selectedCountry==0) {
+			document.getElementById("im").src=egypt[0];
+			}
+			else if (selectedCountry==1) {
+			document.getElementById("im").src=australia[0];
+			}
+			else if (selectedCountry==2) {
+			document.getElementById("im").src=germany[0];
+			}
+			else if (selectedCountry==3) {
+			document.getElementById("im").src=usa[0];
+			}
+			}
+			var vari=0;
+			function iterateImage() {
+			vari++; 
+			if (selectedCountry==0) { if (vari < 3) {
+			document.getElementById("im").src=egypt[vari];
+			} 
+			else { vari=0;
+			document.getElementById("im").src=egypt[vari];
+			}
+			}
+			if (selectedCountry==1) { if (vari < 2) {
+			document.getElementById("im").src=australia[vari];
+			} 
+			else { vari=0;
+			document.getElementById("im").src=australia[vari];
+			}
+			}
+			if (selectedCountry==2) { if (vari < 4) {
+			document.getElementById("im").src=germany[vari];
+			} 
+			else { vari=0;
+			document.getElementById("im").src=germany[vari];
+			}
+			}
+			if (selectedCountry==3) { if (vari < 5) {
+			document.getElementById("im").src=usa[vari];
+			} 
+			else { vari=0;
+			document.getElementById("im").src=usa[vari];
+			}
+			}
+			}
+		</script>
+	</head>
+	
+	<body>	
+<center>
+<h1> Where do you want to go? </h1>
+<hr>
+
+
+		
+		<table border="1">
+		<tbody><tr>
+		<td>
+		<img src="select.jpg" id="im" height="200" width="280" onclick="iterateImage()">
+		</td>
+		<td width="100">
+		<center>
+		<p id="place">Country Name</p>
+		</center>
+		</td>
+		</tr>
+	</tbody></table>
+	<table border="1">		
+		<tbody><tr>
+		<td>
+		<div><input type="button" value="Egypt" onclick="changeTo(0)"></div>
+		</td>
+		<td>
+		<div><input type="button" value="Australia" onclick="changeTo(1)"></div>
+		</td>
+		<td>
+		<div><input type="button" value="Germany" onclick="changeTo(2)"></div>
+		</td>
+		<td>
+		<div><input type="button" value="USA" onclick="changeTo(3)"></div>
+		</td>
+		</tr>
+		</tbody></table>
+</center>
+	
+</body></html>

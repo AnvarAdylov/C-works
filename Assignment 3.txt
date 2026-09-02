@@ -1,0 +1,112 @@
+// Assignment 3 
+// By Adylov Anvar
+// Section 5
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+// Declared struct to store country's information
+typedef struct _person_count {
+	char* country; 
+	long females;
+	long males;
+	struct _person_count *link;
+} person_count;
+//  Function to free all created struct memories
+void freeAll(person_count *list) {
+	if (list != NULL) {
+		freeAll(list->link);
+		free(list);
+	}
+}
+//  Function to copy string to the struct
+void copy_string(char *source, char *target) {
+	while (*source) {
+		*target = *source;
+		source++;
+		target++;
+	}
+	*target = '\0';
+}
+//  Function to calculate amount of total enrolled
+long totalEnroll(person_count *node) {
+	return node->females + node->males;
+}
+//  Function which prints all countries
+void printList(person_count *node) {
+	if (node != NULL) {
+		printf("%30s %10li %10li %10li \n", node->country, node->females, node->males, totalEnroll(node));
+		printList(node->link);
+	}
+}
+int sizeofstring(char *string) {
+	int n = 0;
+	while (*string != '\0') {
+		n = n + 1;
+		string++;
+	}
+	return n;
+}
+//  Main body of the program
+int main() {
+	int size;
+	// Pointers made to sort list in right order
+	person_count *first = NULL;
+	person_count *curr = NULL;
+	// Pointer which help to navigate through list
+	person_count *search = NULL;
+	// Temporary store variables
+	char country[32];
+	long males, females;
+	//
+	FILE *infile;
+	infile = fopen("SecondaryEd2005.txt", "r");
+	// Loop where main part goes
+	do{
+		// Scan from file and saving in the temporary variables
+		fscanf(infile, "%s %li %li \n", country, &females, &males);
+		// Malloc for Nodes
+		person_count *Node = malloc(sizeof(person_count));
+		// Assigning values to nodes
+		Node->males = males;
+		Node->females = females;
+		Node->link = NULL;
+		size = sizeofstring(country);
+		Node->country = malloc(size*sizeof(char));
+		copy_string(country, Node->country);
+		// Setting first Node
+		if (first == NULL) {
+			first = Node;
+		}
+		else if (totalEnroll(Node) > totalEnroll(first)) {
+			Node->link = first;
+			first = Node;
+		}
+		else {
+			curr = first;
+			while (curr != NULL) {
+				if (curr->link == NULL) {
+					curr->link = Node;
+					Node->link = NULL;
+					break;
+				}
+				if (totalEnroll(Node) > totalEnroll(curr->link)) {
+					Node->link = curr->link;
+					curr->link = Node;
+					break;
+				}
+				if (totalEnroll(Node) < totalEnroll(curr->link)) {
+					curr = curr->link;
+				}
+			}
+		}
+	} while (!feof(infile));
+	printList(first);
+	// Loop made to free up memory for the malloc made for country
+	for (search = first;search->link!=NULL;search=search->link) {
+			free(search->country);
+		}
+	// Function to free memory of Nodes
+	freeAll(first);
+	fclose(infile);
+}

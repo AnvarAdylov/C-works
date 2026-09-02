@@ -1,0 +1,50 @@
+// Lesson 16
+// Section 5 Anvar Adylov
+
+#include <stdio.h>
+#include <math.h>
+// Simple numbers
+_Bool isPrime(int n)
+{
+	_Bool t = 1;
+	for(int i=2;i <= sqrt(n);i++) {
+	if (n%i == 0) {
+	t = 0;
+	} 
+	}
+	return t;
+}
+// exponential taylor approximation
+double expApprox(double x, int n)
+{
+	double g = 1;
+	double f = 1;
+	int p = 1;
+	for (int i=1; i < n; i++)
+	{
+		g = g*x;
+		p = p*i;
+		f = f + g/p;
+	}
+	return f;
+}
+// sin approximation taylor
+double sinApprox(double x, int n)
+{
+	double rad = x*3.14 / 180, sinx = 0;
+	int z = 1, d = 1;
+	for(int i=1;i<n;i++) {
+	d = d*i;
+	_Bool h = 1;
+	if (i%2 == 0) {
+	h = 0;
+	} else {
+		h=1;
+	}
+	if (h == 1) {
+		z = z + 1;
+	}
+	sinx = sinx + h*pow(-1, z)*pow(rad, i) / d;
+	}
+	return sinx;
+}

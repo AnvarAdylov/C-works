@@ -1,0 +1,48 @@
+By Anvar Adylov
+SE Homework 2
+1. 
+package homeworkseapplication;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+
+
+/**
+ *
+ * @author Anvar Adylov
+ */
+public class FirstProblem implements Callable {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        Future result = service.submit(new FirstProblem());
+        System.out.println(result.get());
+        }
+
+    @Override
+    public Object call() throws Exception {
+        Thread.sleep(1000);
+        return "String";
+    }
+}
+
+
+2. Read the article Does OO Sync with How We Think? by Les Hatton in the May/June 1998 issue of
+IEEE Software, (this article is available on IEEE xplore). Briefly answer each of the following questions.
+(a) The author concludes that OO paradigm that at first sight is similar to the people logical thought process in reality
+is a something different. To prove this he used the comparison with the human short-term and long-term memories and we 
+observe that the methods provided by OO does not fit into this logical process and for a long term period proven to be inefficient 
+way to actually implement things. Thus, his opinion states that it is not possible for OO to be the silver bullet that will result 
+in quantum leap for software engineering.
+(b) As I understood the main costs related to software generally come from the corrective maintenance stage when the software 
+problems are fixed. This is mostly due to the reason that it is one of the main part of software life-cycle so that it
+takes twice as much time to fix the problems on this stage than on the stage of development.
+(c) In this article, the main experiment was that corrective maintenance cost was tracked for the two types of
+programming languages. First is the OO type, and the other is conventional type. The results that were observed 
+show that the cost is much higher for OO type as there were much more time spent fixing the problems and on agraphical
+data we saw that this indeed was the case here. There were noticeable shift of the OO graph to the side where more time
+was needed in order to fix everything.

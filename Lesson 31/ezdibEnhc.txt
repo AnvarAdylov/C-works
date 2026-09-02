@@ -1,0 +1,24 @@
+#include "ezdibEnh.h"
+#include "ezdib.h"
+
+
+void my_triangle(HEZDIMAGE hDib,
+	int x1, int y1,
+	int x2, int y2,
+	int x3, int y3,
+	Color lineClr) {
+	ezd_line(hDib, x1, y1, x2, y2, lineClr);
+	ezd_line(hDib, x2, y2, x3, y3, lineClr);
+	ezd_line(hDib, x3, y3, x1, y1, lineClr);
+	// ezd_flood_fill(hDib, , lineClr)
+};
+
+void my_diamond(HEZDIMAGE hDib,
+	int xCenter, int yCenter,
+	int height, int width,
+	Color lineClr) {
+	ezd_line(hDib, xCenter - width / 2, yCenter, xCenter, yCenter + height/2, lineClr);
+	ezd_line(hDib, xCenter, yCenter + height / 2, xCenter + width / 2, yCenter, lineClr);
+	ezd_line(hDib, xCenter + width / 2, yCenter, xCenter, yCenter - height / 2, lineClr);
+	ezd_line(hDib, xCenter, yCenter - height / 2, xCenter - width / 2, yCenter, lineClr);
+};

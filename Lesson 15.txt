@@ -1,0 +1,112 @@
+// Lesson 15
+// Section 5
+// Adylov Anvar
+// Task 1
+#include <stdio.h>
+typedef struct {
+	int r, g, b;
+} color;
+typedef struct {
+	int x, y;
+} coords;
+typedef struct {
+	int side_length;
+	coords ulc;
+	color fill, outline;
+} square;
+typedef struct {
+	int side_a, side_b;
+	coords ulc;
+	color fill, outline;
+} rectangle;
+
+int main()
+{
+	square kvadrat = {5, (0, 0), (255, 255, 255), (0, 0, 0)};
+	rectangle rectan = {5, 8, (0, 0), (255, 255, 255), (0, 0, 0)};
+
+	return 0;
+}
+// Task 2 
+typedef struct {
+	int r, g, b;
+} color;
+typedef struct {
+	int x, y;
+} coords;
+typedef struct {
+	color fill;
+	coords point[5];
+} pentagon;
+
+int main()
+{
+
+	int i;
+	FILE *infile;
+	infile = fopen("Input.txt", "r");
+
+	if (infile == NULL) {
+		printf("Problem opening file.");
+		return 1;
+	}
+	color whie = { 0, 0, 0 };
+	color red = { 255, 0, 0 };
+	color black = { 255, 255, 255 };
+	printf("File opened successfully.");
+	pentagon bob;
+	fscanf(infile, "%i %i %i \n", &bob.fill.r, &bob.fill.g, &bob.fill.b);
+	for (i = 0; i < 5; i++) {
+		fscanf(infile, "%i %i \n", &bob.point[i].x, &bob.point[i].y);
+	}
+
+	printf("%i %i %i \n", bob.fill.r, bob.fill.g, bob.fill.b);
+	for (i = 0; i < 5; i++) {
+		printf("%i %i \n", bob.point[i]);
+	}
+
+	fclose(infile);
+	
+	return 0;
+}
+// Task 3
+typedef struct {
+	int CustomerID;
+	char type;
+	int accbalance;
+} BankCustomer;
+
+int main()
+{
+	int i, sumc = 0, sums = 0, sumd = 0, nc = 0, ns = 0, nd = 0;
+	double avgc, avgs, avgd;
+	FILE *infile;
+	infile = fopen("clients.txt", "r");
+	BankCustomer list[10];
+	for (i = 0; i < 10; i++) {
+		fscanf(infile, "%i %c %i", &list[i].CustomerID, &list[i].type, &list[i].accbalance);
+	}
+	for (i = 0; i < 10; i++) {
+		if (list[i].type == 'c' || list[i].type == 'C') {
+			sumc = sumc + list[i].accbalance;
+			nc = nc + 1;
+		}
+
+		if (list[i].type == 's' || list[i].type == 'S') {
+			sums = sums + list[i].accbalance;
+			ns = ns + 1;
+		}
+
+		if (list[i].type == 'd' || list[i].type == 'D') {
+			sumd = sumd + list[i].accbalance;
+			nd = nd + 1;
+		}
+	}
+	avgc = sumc / nc;
+	avgs = sums / ns;
+	avgd = sumd / nd;
+	printf("The average balance on checking accounts %f \n", avgc);
+	printf("The average balance on savings accounts %f \n", avgs);
+	printf("The average balance on deposit accounts %f \n", avgd);
+	return 0;
+}

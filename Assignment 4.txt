@@ -1,0 +1,220 @@
+Assignment 4
+Section 5
+Adylov Anvar
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+// Declared struct to store country's information
+typedef struct {
+	char* country;
+	long females;
+	long males;
+} person_count;
+// function to estimate size of the string
+int sizeofstring(char *string) {
+	int n = 0;
+	while (*string != '\0') {
+		n = n + 1;
+		string++;
+	}
+	return n;
+}
+//  Function to copy string to another
+char* copy_string(char *source) {
+	int i = sizeofstring(source);
+	int j;
+char *target = malloc(sizeof(char)*(i+1));
+	for (j = 0; j<i; j++){
+		*target = *(source + j);
+		target++;
+		}
+*target = '\0'; 
+
+target = target - i;
+return target;
+}
+//  Function to calculate amount of total enrolled males and females
+long totalEnroll(person_count *data) {
+	return data->females + data->males;
+}
+//  Function which prints all countries
+void printList(person_count *data[]) {
+	for (int i = 0; i < 158; i++) {
+		printf("%i %30s %10li %10li %10li \n", i + 1, data[i]->country, data[i]->females, data[i]->males, totalEnroll(data[i]));
+	}
+}
+// Name Compare function
+_Bool nameCompare(char name1[], char name2[]) {
+	int i = 0;
+	do {
+		if (name1[i] < name2[i]) {
+			return 1;
+		}
+		else if (name1[i] > name2[i]) {
+			return 0;
+		}
+		i++;
+	} while (name1[i] != '\0' || name2[i] != '\0');
+	return 0;
+}
+// Selection sort algorithm
+void selectionSort(person_count *x[], int size) {
+
+	int i;
+	for (i = 0; i < size - 1; i++) {
+
+		int j, mindex = i;
+		for (j = i + 1; j < size; j++) {
+			if (x[j]->females < x[mindex]->females) {
+				mindex = j;
+			}
+		}
+		int tempf = x[i]->females;
+		int tempm = x[i]->males;
+		char *temps = copy_string(x[i]->country);
+		
+
+		x[i]->females = x[mindex]->females;
+		x[i]->males = x[mindex]->males;
+		x[i]->country = copy_string(x[mindex]->country);
+
+		x[mindex]->females = tempf;
+		x[mindex]->males = tempm;
+		x[mindex]->country = copy_string(temps);
+	}
+}
+// Insertion sort algorithm
+void insertionSort(person_count *x[], int size) {
+	int i;
+	for (i = 0; i < size; i++) {
+		int toInsertm = x[i]->males;
+		int toInsertf = x[i]->females;
+		char *toInserts;
+		toInserts = copy_string(x[i]->country);
+		int j;
+		for (j = i; j >= 0; j--) {
+			if (j == 0 || x[j - 1]->males >= toInsertm) {
+
+				x[j]->males = toInsertm;
+				x[j]->females = toInsertf;
+				x[j]->country = copy_string(toInserts);
+				break;
+			}
+			else {
+				x[j]->males = x[j - 1]->males;
+				x[j]->females = x[j - 1]->females;
+				x[j]->country = copy_string(x[j - 1]->country);
+			}
+		}
+	}
+}
+// Bubble sort algorithm
+void bubbleSort(person_count *x[], int size) {
+	int i, j;
+	for (i = 0; i < size - 1; i++) {
+
+		for (j = 0; j < size - 1 - i; j++) {
+
+			if (nameCompare(x[j + 1]->country, x[j]->country) == 1) {
+
+				int tempf = x[j + 1]->females;
+				int tempm = x[j + 1]->males;
+				char *temps;
+				temps = copy_string(x[j + 1]->country);
+				x[j + 1]->females = x[j]->females;
+				x[j + 1]->males = x[j]->males;
+				x[j + 1]->country = copy_string(x[j]->country);
+				x[j]->females = tempf;
+				x[j]->males = tempm;
+				x[j]->country = copy_string(temps);
+			}
+		}
+
+	}
+}
+// Partition function
+int partition(person_count *x[], int first, int last) {
+
+	int pivot = first;
+
+	int up = first, down = last;
+	while (up < down) {
+
+		while (totalEnroll(x[up]) >= totalEnroll(x[pivot]) && up < last) {
+			up++;
+		}
+		while (totalEnroll(x[down]) < totalEnroll(x[pivot])) {
+			down--;
+		}
+		if (up < down) {
+			int tempf = x[up]->females;
+			int tempm = x[up]->males;
+			char *temps;
+			temps = copy_string(x[up]->country);
+			x[up]->females = x[down]->females;
+			x[up]->males = x[down]->males;
+			x[up]->country = copy_string(x[down]->country);
+			x[down]->females = tempf;
+			x[down]->males = tempm;
+			x[down]->country = copy_string(temps);
+		}
+	}
+
+	int tempf2 = x[pivot]->females;
+	int tempm2 = x[pivot]->males;
+	char *temps2;
+	temps2 = copy_string(x[pivot]->country);
+	x[pivot]->females = x[down]->females;
+	x[pivot]->males = x[down]->males;
+	x[pivot]->country = copy_string(x[down]->country);
+	x[down]->females = tempf2;
+	x[down]->males = tempm2;
+	x[down]->country = copy_string(temps2);
+
+	return down;
+}
+// Quicksort algorithm
+void quicksort(person_count *x[], int first, int last) {
+
+	if (first < last) {
+		int pivIndex = partition(x, first, last);
+		quicksort(x, first, pivIndex - 1);
+		quicksort(x, pivIndex + 1, last);
+	}
+}
+//  Main body of the program
+int main() {
+	int n = 158;
+	person_count *data[158];
+	
+	// Temporary store variables
+	char country[32];
+	int size;
+	long males, females;
+	//
+	FILE *infile;
+	infile = fopen("SecondaryEd2005.txt", "r");
+	// Loop where main part goes
+
+	for (int i = 0; i<158; i++) {
+		// Scan from file and saving in the temporary variables
+		fscanf(infile, "%s %li %li \n", country, &females, &males);
+		data[i] = (person_count*)malloc(sizeof(person_count));
+
+		// Assigning values to nodes
+		data[i]->males = males;
+		data[i]->females = females;
+		size = sizeofstring(country);
+		data[i]->country = copy_string(country);
+	}
+	
+	quicksort(data, 0, 157);
+	printList(data);
+	bubbleSort(data, 158);
+	printList(data);
+	for (int i = 0; i < 158; i++) {
+		free(data[i]->country);
+		free(data[i]);
+	}
+	fclose(infile);
+}

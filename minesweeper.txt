@@ -1,0 +1,154 @@
+// Section 5 EXCURSION MINESWEEPER
+// Anvar Adylov
+
+#include <stdlib.h>
+#include <stdio.h>
+
+int main()
+{
+		_Bool view[12][30];
+		char minefield[12][30];
+		int minelist[2][10];
+		int counter[12][30];
+		int i, j, r, x, y, cond = 0;
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				view[i][j] = 0;
+			}
+		}
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				minefield[i][j] = '.';
+			}
+		}
+		for (j = 0; j < 10; j++) {
+
+			minelist[0][j] = rand() % 12;
+			minelist[1][j] = rand() % 30;
+			for (r = 0; r < 10; r++) {
+				if (minelist[0][j] == minelist[0][r] && minelist[1][j] == minelist[1][r]) {
+					minelist[0][j] = rand() % 12;
+					minelist[1][j] = rand() % 30;
+				}
+			}
+		}
+		for (j = 0; j < 10; j++) {
+			minefield[minelist[0][j]][minelist[1][j]] = '*';
+		}
+
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				if (minefield[i][j] == '*') {
+					if (minefield[i - 1][j - 1] != '*') {
+						minefield[i - 1][j - 1] = 48;
+					}
+					if (minefield[i - 1][j] != '*') {
+						minefield[i - 1][j] = 48;
+					}
+					if (minefield[i - 1][j + 1] != '*') {
+						minefield[i - 1][j + 1] = 48;
+					}
+					if (minefield[i + 1][j - 1] != '*') {
+						minefield[i + 1][j - 1] = 48;
+					}
+					if (minefield[i + 1][j] != '*') {
+						minefield[i + 1][j] = 48;
+					}
+					if (minefield[i + 1][j + 1] != '*') {
+						minefield[i + 1][j + 1] = 48;
+					}
+					if (minefield[i][j + 1] != '*') {
+						minefield[i][j + 1] = 48;
+					}
+					if (minefield[i][j - 1] != '*') {
+						minefield[i][j - 1] = 48;
+					}
+				}
+			}
+		}
+
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				counter[i][j] = 0;
+			}
+		}
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				if (minefield[i][j] == '*') {
+					counter[i - 1][j - 1] = counter[i - 1][j - 1] + 1;
+					counter[i - 1][j] = counter[i - 1][j] + 1;
+					counter[i - 1][j + 1] = counter[i - 1][j + 1] + 1;
+					counter[i + 1][j - 1] = counter[i + 1][j - 1] + 1;
+					counter[i + 1][j] = counter[i + 1][j] + 1;
+					counter[i + 1][j + 1] = counter[i + 1][j + 1] + 1;
+					counter[i][j + 1] = counter[i][j + 1] + 1;
+					counter[i][j - 1] = counter[i][j - 1] + 1;
+				}
+			}
+		}
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				if (minefield[i][j] == '0') {
+					minefield[i][j] = minefield[i][j] + counter[i][j];
+				}
+			}
+		}
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				printf("%2c", view[i][j]);
+			}
+			printf("\n");
+		}
+		do {
+			do {
+				printf("Write x coordinates: \n");
+				scanf("%i", &x);
+				--x;
+				printf("Write y coordinates: \n");
+				scanf("%i", &y);
+				--y;
+			} while (x > 29 || x < 0 || y > 11 || y < 0);
+			cond = cond + 1;
+			if (minefield[y][x] == '*') {
+				printf("BOOOOOOOM \n");
+				for (i = 0; i < 12; i++) {
+					for (j = 0; j < 30; j++) {
+						view[i][j] = 1;
+					}
+				}
+				break;
+			}
+			else {
+				view[y][x] = 1;
+			}
+			for (i = 0; i < 12; i++) {
+				for (j = 0; j < 30; j++) {
+					if (view[i][j] == 0) {
+						printf("%2c", view[i][j]);
+					}
+					else {
+						printf("%2c", minefield[i][j]);
+					}
+				}
+				printf("\n");
+			}
+		} while (cond != 350);
+		for (i = 0; i < 12; i++) {
+			for (j = 0; j < 30; j++) {
+				if (view[i][j] == 0) {
+					printf("%2c", view[i][j]);
+				}
+				else {
+					printf("%2c", minefield[i][j]);
+				}
+			}
+			printf("\n");
+		}
+		printf("GAME OVER \n");
+		if (cond == 350) {
+			printf("Congratulations you won. \n");
+		}
+	return 0;
+}
+
+

@@ -1,0 +1,140 @@
+Lesson 26 Section 5 Adylov Anvar
+1. Create a linked list structure to store a sequence of 26 characters,
+ ‘a’ through ‘z’.  Be sure to first define a proper node struct type first.
+#include <stdlib.h>
+#include <stdio.h>
+ 
+typedef struct _charNode {
+	char letter;
+	struct _charNode* link;
+} charNode;
+
+void printList(charNode *node) {
+	if (node != NULL) {
+		printf("%c \n", node->letter);
+		printList(node->link);
+	}
+}
+
+void freeAll(charNode *node) {
+	if (node != NULL) {
+		freeAll(node->link);
+		printf("Freeing up %f \n", node->letter);
+		free(node);
+	}
+}
+
+int main() {
+	setvbuf(stdout, NULL, _IONBF, 0);
+
+	charNode *first = NULL;
+	charNode *prev = NULL;
+
+	for (int i = 0; i<26; i++) {
+		charNode *newNode = malloc(sizeof(charNode));
+
+		newNode->letter = 97 + i;
+		newNode->link = NULL;
+
+		if (first == NULL) {
+			first = newNode;
+		}
+		else {
+			prev->link = newNode;
+		}
+
+		prev = newNode;
+	}
+	printList(first);
+
+	printf("Done.");
+
+	freeAll(first);
+	scanf("%i");
+	return 0;
+}
+2.
+#include <stdlib.h>
+
+typedef struct _weather{
+	int rain;
+	double avertemp, avwind;
+	struct weather *link;
+} weather;
+void printtable(weather *list) {
+	if (list != NULL)  {
+		printf("%i %lf %lf \n", list->rain, list->avertemp, list->avwind);
+		printtable(list->link);
+	}
+}
+int totalrain(weather *list) {
+	if (list != NULL) {
+		return list->rain + totalrain(list->link);
+	}
+	else {
+		return 0;
+	}
+}
+double lowtemp(weather *list) {
+	if (list != NULL)  {
+		if (lowtemp(list->link) > list->avertemp) {
+			return list->avertemp;
+		}
+		else if (list->avertemp > lowtemp(list->link)) {
+			return lowtemp(list->link);
+		}
+	}
+	else {
+		return 100;
+	}
+}
+double sumwind(weather *list) {
+	if (list != NULL)  {
+		return list->avwind + sumwind(list->link);
+	}
+	else {
+		return 0;
+	}
+}
+int counter(weather *list) {
+	if (list != NULL)  {
+		return counter(list->link) + 1;
+	}
+	else {
+		return 0;
+	}
+}
+void freeAll(weather *list) {
+	if (list != NULL) {
+		freeAll(list->link);
+		free(list);
+	}
+}
+int main() {
+	FILE *infile;
+	infile = fopen("astana.txt", "r");
+	weather *first = NULL;
+	weather *prev = NULL;
+	do {
+		weather *astana = malloc(sizeof(weather));
+
+		fscanf(infile, "%i %lf %lf \n", &astana->rain, &astana->avertemp, &astana->avwind);
+		astana->link = NULL;
+
+		if (first == NULL) {
+			first = astana;
+		}
+		else {
+			prev->link = astana;
+		}
+
+		prev = astana;
+	} while (!feof(infile));
+
+	printtable(first);
+	printf("%i \n", totalrain(first));
+	printf("%lf \n", lowtemp(first));
+	printf("%lf \n", sumwind(first) / counter(first));
+	freeAll(first);
+	fclose(infile);
+}

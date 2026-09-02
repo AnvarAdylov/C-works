@@ -1,0 +1,27 @@
+#include "stdafx.h"
+
+
+int main()
+{
+	int width, height, length, volume, previous = 0,count = 0;
+	FILE *file;
+	file = fopen("Boxes.txt", "r");
+	if (file == NULL) {
+	 	printf("Problem opening file.");
+		return 1;
+	}
+	printf("File opened successfully.");
+	do {
+		fscanf(file, "%i %i %i", width, length, height);
+		volume = width*length*height;
+		if (volume > previous) {
+			count = count + 1;
+			previous = volume;
+		}
+	} while (!feof(file));
+		fclose(file);
+
+
+	return 0;
+}
+

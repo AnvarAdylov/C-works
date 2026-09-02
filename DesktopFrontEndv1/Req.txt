@@ -1,0 +1,4 @@
+Requirements
+Login page, so that each user data will be stored separately
+3d interface wich provide functionality to create notes, see them and delete.
+Door element which will allow user to log out from the program 

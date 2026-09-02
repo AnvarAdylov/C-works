@@ -1,0 +1,90 @@
+// Excursion B Weather Data
+// Section 5
+// Adylov Anvar
+#include <math.h>
+#include <stdio.h>
+typedef struct {
+	int ID;
+	float longitude, latitude, altitude;
+	double temp[12];
+	double max, min, avg, var;
+} wrecord;
+
+int main()
+{
+	wrecord stations[13];
+	int i, j;
+	double sum = 0, v, d = 0, correlation;
+	_Bool check = 0;
+	FILE *input;
+	input = fopen("Weather.txt", "r");
+	for (i = 0; i < 13; i++) {
+		fscanf(input, "%5i %f %f %f", &stations[i].ID, &stations[i].longitude, &stations[i].latitude, &stations[i].altitude);
+		for (j = 0; j < 12; j++) {
+			fscanf(input, " %lf", &stations[i].temp[j]);
+		}
+		fscanf(input, "\n");
+	}
+	for (i = 0; i < 13; i++) {
+		stations[i].max = 0;
+		stations[i].min = 1000;
+		for (j = 0; j < 12; j++) {
+			if (stations[i].temp[j] > stations[i].max) {
+				stations[i].max = stations[i].temp[j];
+			}
+
+			if (stations[i].temp[j] < stations[i].min) {
+				stations[i].min = stations[i].temp[j];
+			}
+			sum = sum + stations[i].temp[j];
+		}
+		stations[i].avg = sum / 12;
+		sum = 0;
+		fscanf(input, "\n");
+	}
+	for (i = 0; i < 13; i++) {
+		for (j = 0; j < 12; j++) {
+			v = pow((stations[i].temp[j] - stations[i].avg), 2);
+			d = d + v;
+		}
+		stations[i].var = d / 12;
+		d = 0;
+	}
+	printf("ID    Longitude Latitude Altitude Max     Min     Avg    Variance\n");
+	for (i = 0; i < 13; i++) {
+		printf("%5i %5.2f     %5.2f    %5.2f", stations[i].ID, stations[i].longitude, stations[i].latitude, stations[i].altitude);
+		printf("  %6.2lf  %6.2lf  %6.2lf   %6.2lf", stations[i].max, stations[i].min, stations[i].avg, stations[i].var);
+		printf("\n");
+	}
+	int first, second, fi, si;
+	printf("Please enter two stations id's: \n");
+	do {
+		scanf("%i", &first);
+		for (i = 0; i < 13; i++) {
+			if (stations[i].ID == first) {
+				fi = i;
+				check = 1;
+			}
+		}
+	} while (check != 1);
+	check = 0;
+	do {
+		scanf("%i", &second);
+		for (i = 0; i < 13; i++) {
+			if (stations[i].ID == second) {
+				si = i;
+				check = 1;
+			}
+		}
+	} while (check != 1);
+	double dev = 0, pf = 0, ps = 0;
+	for (j = 0; j < 12; j++) {
+		dev = dev + (stations[fi].temp[j] - stations[fi].avg)*(stations[si].temp[j] - stations[si].avg);
+		pf = pf + pow(stations[fi].temp[j] - stations[fi].avg, 2);
+		ps = ps + pow(stations[si].temp[j] - stations[si].avg, 2);
+	}
+	correlation = dev / sqrt(pf*ps);
+	printf("Correlation between stations %i and %i  is: %lf", first, second, correlation);
+	fclose(input);
+	return 0;
+}

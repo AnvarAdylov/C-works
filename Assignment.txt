@@ -1,0 +1,85 @@
+// Assignment2
+// By Anvar Adylov and Rassul Shaimerdenov
+//
+
+
+
+typedef struct {
+	char firstname[15];
+	char lastname[15];
+	int id;
+	_Bool GenderIsMale;
+	char grade;
+} student;
+int main()
+{
+	// open text documents with all students and grades information
+	FILE *inputf;
+	FILE *ifile;
+	inputf = fopen("allstudents.txt", "r");
+	ifile = fopen("grades.txt", "r");
+	// declare array of a struct students
+	student allstudents[50];
+	// read from students txt document all data about students and fill with it array of students
+	for (int i = 0; i < 50; i++) {
+		char s;
+		fscanf(inputf, "%s", allstudents[i].firstname);
+		fscanf(inputf, "%s", allstudents[i].lastname);
+		fscanf(inputf, "%s", &s);
+		// if program read char m from the document it sets the boolean value of gender to 1
+		if (s == 'M' || s == 'm') {
+			allstudents[i].GenderIsMale = 1;
+		}
+		else {
+			allstudents[i].GenderIsMale = 0;
+		}
+		allstudents[i].grade = '-';
+		fscanf(inputf, "%i", &allstudents[i].id);
+	}
+
+	int id[24];
+	char grade[24];
+	// read from the grades document and sets grade of the students whos id found in the grades txt
+	for (int j = 0; j < 24; j++) {
+		fscanf(ifile, "%i", &id[j]);
+		fscanf(ifile, "%s", &grade[j]);
+		for (int i = 0; i < 50; i++) {
+			if (allstudents[i].id == id[j]) {
+				allstudents[i].grade = grade[j];
+			}
+		}
+	}	// Count grades
+	int a = 0, b = 0, c = 0, d = 0, f = 0;
+	for (int i = 0; i < 50; i++) {
+		if (allstudents[i].grade == 'A') {
+			a++;
+		}
+		else if (allstudents[i].grade == 'B') {
+			b++;
+		}
+		else if (allstudents[i].grade == 'C') {
+			c++;
+		}
+		else if (allstudents[i].grade == 'D') {
+			d++;
+		}
+		else if (allstudents[i].grade == 'F') {
+			f++;
+		}
+	}
+	printf("Number of A's : %i\nNumber of B's : %i\nNumber of C's : %i\nNumber of D's : %i\nNumber of F's : %i\n", a, b, c, d, f);
+	// print all data about the students who have grades in alphabetic order
+	int p = 1;
+	for (int i = 0; i < 50; i++) {
+		if (allstudents[i].grade != '-') {
+			printf("%2i. %15s %15s id:%07i grade:%c \n", p, allstudents[i].firstname, allstudents[i].lastname, allstudents[i].id, allstudents[i].grade);
+			p = p + 1;
+		}
+	}
+	scanf("%c");
+	fclose(inputf);
+	fclose(ifile);
+	return 0;
+}
+
+

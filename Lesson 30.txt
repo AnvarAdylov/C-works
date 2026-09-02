@@ -1,0 +1,414 @@
+Lesson 30
+Section 5
+Andylov Anvar
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// #define SIZE 8
+ #define SIZE 12
+
+
+// Sort type largest to smallestor otherwise
+#define STOL
+//#define LTOS
+
+// #define USE_NAMED_STUDENT
+ #define USE_YEAR_MAJOR_STUDENT
+
+#ifdef USE_NAMED_STUDENT
+#define INPUT "records.txt"
+#endif
+
+#ifdef USE_YEAR_MAJOR_STUDENT
+#define INPUT "records2.txt"
+#endif
+
+ #define USE_INSERTION_SORT
+ //#define USE_SELECTION_SORT
+ //#define USE_BUBBLE_SORT
+ //#define USE_QUICKSORT
+
+/*
+* Select one student record type below,
+* depending on the above define command
+*/
+#ifdef USE_NAMED_STUDENT
+// Named student type
+typedef struct {
+	int id;
+	char name[12];
+} student;
+#endif
+
+// Year-major student type
+#ifdef USE_YEAR_MAJOR_STUDENT
+typedef struct {
+	int id;
+	int year; // 1, 2, 3, or 4
+	char major[5]; // e.g. "robt", "phys", "math"
+} student;
+#endif
+
+#ifdef STOL
+_Bool compare1(student *a, student *b) {
+	if (a->id <= b->id) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+_Bool compare2(student *a, student *b) {
+	if (a->id > b->id) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+_Bool compare3(student *a, student b) {
+	if (a->id <= b.id) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+#endif
+#ifdef LTOS
+_Bool compare1(student *a, student *b) {
+	if (a->id >= b->id) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+_Bool compare2(student *a, student *b) {
+	if (a->id < b->id) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+_Bool compare3(student *a, student b) {
+	if (a->id >= b.id) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+#endif
+
+
+#ifdef  USE_SELECTION_SORT
+// Selection sort
+void sort(student *x[]) {
+	int i;
+	for (i = 0; i < SIZE - 1; i++) {
+
+		int j, mindex = i;
+		for (j = i + 1; j < SIZE; j++) {
+			if (compare2(x[mindex], x[j])) {
+				mindex = j;
+			}
+		}
+		#ifdef USE_NAMED_STUDENT
+		student temp;
+		temp.id = x[i]->id;
+		strcpy(temp.name, x[i]->name);
+		
+		x[i]->id = x[mindex]->id;
+		strcpy(x[i]->name, x[mindex]->name);
+
+		x[mindex]->id = temp.id;
+		strcpy(x[mindex]->name, temp.name);
+		#endif
+		#ifdef USE_YEAR_MAJOR_STUDENT
+		student temp;
+		temp.id = x[i]->id;
+		temp.year = x[i]->year;
+		strcpy(temp.major, x[i]->major);
+
+		x[i]->id = x[mindex]->id;
+		x[i]->year = x[mindex]->year;
+		strcpy(x[i]->major, x[mindex]->major);
+
+		x[mindex]->id = temp.id;
+		x[mindex]->year = temp.year;
+		strcpy(x[mindex]->major, temp.major);
+		#endif
+	}
+	// Put your selection sort code here
+}
+#endif 
+#ifdef  USE_INSERTION_SORT
+// Insertion sort
+void sort(student *x[]) {
+	int i;
+	for (i = 0; i < SIZE; i++) {
+#ifdef USE_NAMED_STUDENT
+		student temp;
+		temp.id = x[i]->id;
+		strcpy(temp.name, x[i]->name);
+
+		int j;
+		for (j = i; j >= 0; j--) {
+			if (j == 0 || compare3(x[j - 1], temp.id)) {
+
+				x[j]->id = temp.id;
+				strcpy(x[j]->name, temp.name);
+				break;
+			}
+			else {
+				x[j]->id = x[j-1]->id;
+				strcpy(x[j]->name, x[j-1]->name);
+			}
+		}
+#endif
+
+
+#ifdef USE_YEAR_MAJOR_STUDENT
+		student temp;
+		temp.id = x[i]->id;
+		temp.year = x[i]->year;
+		strcpy(temp.major, x[i]->major);
+
+		int j;
+		for (j = i; j >= 0; j--) {
+			if (j == 0 || compare3(x[j - 1], temp)) {
+
+				x[j]->id = temp.id;
+				x[j]->year = temp.year = x[i]->year;
+				strcpy(x[j]->major, temp.major);
+				break;
+			}
+			else {
+				x[j]->id = x[j - 1]->id;
+				x[j]->year = x[j - 1]->year;
+				strcpy(x[j]->major, x[j - 1]->major);
+			}
+		}
+#endif
+	}
+	// Put your insertion sort code here
+}
+#endif
+#ifdef USE_BUBBLE_SORT
+// Bubble sort
+void sort(student *x[]) {
+	int i, j;
+	for (i = 0; i < SIZE - 1; i++) {
+
+		for (j = 0; j < SIZE - 1 - i; j++) {
+
+			if (compare1(x[j + 1], x[j])) {
+#ifdef USE_NAMED_STUDENT
+				student temp;
+				temp.id = x[j+1]->id;
+				strcpy(temp.name, x[j+1]->name);
+				
+				x[j + 1]->id = x[j]->id;
+				strcpy(x[j+1]->name, x[j]->name);
+						
+				x[j]->id = temp.id;
+				strcpy(x[j]->name, temp.name);
+#endif
+#ifdef USE_YEAR_MAJOR_STUDENT
+				student temp;
+				temp.id = x[j+1]->id;
+				temp.year = x[j+1]->year;
+				strcpy(temp.major, x[j+1]->major);
+
+				x[j+1]->id = x[j]->id;
+				x[j+1]->year = x[j]->year;
+				strcpy(x[j+1]->major, x[j]->major);
+
+				x[j]->id = temp.id;
+				x[j]->year = temp.year;
+				strcpy(x[j]->major, temp.major);
+#endif
+			}
+		}
+
+	}
+	// Put your bubble sort code here
+}
+#endif
+#ifdef USE_QUICKSORT
+
+int partition(student *x[], int first, int last) {
+	int pivot = first;
+
+	int up = first, down = last;
+	while (up < down) {
+
+		while (compare1(x[up], x[pivot]) && up < last) {
+			up++;
+		}
+		while (compare2(x[down], x[pivot])) {
+			down--;
+		}
+		if (up < down) {
+#ifdef USE_NAMED_STUDENT
+			student temp;
+			temp.id = x[up]->id;
+			strcpy(temp.name, x[up]->name);
+			x[up]->id = x[down]->id;
+			strcpy(x[up]->name, x[down]->name);
+			x[down]->id = temp.id;
+			strcpy(x[down]->name, temp.name);
+#endif
+#ifdef USE_YEAR_MAJOR_STUDENT
+			student temp;
+			temp.id = x[up]->id;
+			temp.year = x[up]->year;
+			strcpy(temp.major, x[up]->major);
+
+			x[up]->id = x[down]->id;
+			x[up]->year = x[down]->year;
+			strcpy(x[up]->major, x[down]->major);
+
+			x[down]->id = temp.id;
+			x[down]->year = temp.year;
+			strcpy(x[down]->major, temp.major);
+#endif
+		}
+	}
+#ifdef USE_NAMED_STUDENT
+	student temp2;
+	temp2.id = x[pivot]->id;
+	strcpy(temp2.name, x[pivot]->name);
+	x[pivot]->id = x[down]->id;
+	strcpy(x[pivot]->name, x[down]->name);
+	x[down]->id = temp2.id;
+	strcpy(x[down]->name, temp2.name);
+#endif
+#ifdef USE_YEAR_MAJOR_STUDENT
+	student temp2;
+	temp2.id = x[pivot]->id;
+	temp2.year = x[pivot]->year;
+	strcpy(temp2.major, x[pivot]->major);
+
+	x[pivot]->id = x[down]->id;
+	x[pivot]->year = x[down]->year;
+	strcpy(x[pivot]->major, x[down]->major);
+
+	x[down]->id = temp2.id;
+	x[down]->year = temp2.year;
+	strcpy(x[down]->major, temp2.major);
+#endif
+	return down;
+	// Put your quicksort partition code here
+}
+
+void quicksort(student *x[], int first, int last) {
+	if (first < last) {
+		int pivIndex = partition(x, first, last);
+		quicksort(x, first, pivIndex - 1);
+		quicksort(x, pivIndex + 1, last);
+	}
+}
+void sort(student *x[]) {
+	quicksort(x, 0, SIZE - 1);
+}
+
+#endif
+
+
+#ifdef USE_NAMED_STUDENT
+// Use with named student type
+void getRecords(student *x[]) {
+
+	// Opening the input file
+	FILE *file = fopen(INPUT, "r");
+	if (file == NULL) {
+		printf("Cannot find file.");
+		exit(1);
+	}
+	printf("File opened successfully.\n");
+
+	// Reading the records into the array from the file
+	int i;
+	for (i = 0; i < SIZE; i++) {
+		x[i] = malloc(sizeof(student));
+		fscanf(file, "%i %s \n", &x[i]->id, x[i]->name);
+	};
+	fclose(file);
+}
+#endif
+#ifdef USE_YEAR_MAJOR_STUDENT
+// Use with year-major student type
+void getRecords(student *x[]) {
+	// Opening the input file
+	FILE *file = fopen(INPUT, "r");
+	if (file == NULL) {
+		printf("Cannot find file.");
+		exit(1);
+	}
+	printf("File opened successfully.\n");
+
+	// Reading the records into the array from the file
+	int i;
+	for (i = 0; i < SIZE; i++) {
+		x[i] = malloc(sizeof(student));
+		fscanf(file, "%i %i %s \n", &x[i]->id, &x[i]->year, x[i]->major);
+	};
+	fclose(file);
+}
+#endif
+
+
+#ifdef USE_NAMED_STUDENT
+// Use with named student type
+void printArray(student *x[]) {
+	for (int i = 0; i < SIZE; i++) {
+		printf("%i %s \n", x[i]->id, x[i]->name);
+	}
+	// Put your old printArray code here
+}
+#endif
+#ifdef USE_YEAR_MAJOR_STUDENT
+void printArray(student *x[]) {
+	for (int i = 0; i < SIZE; i++) {
+		printf("%i %i %s \n", x[i]->id, x[i]->year, x[i]->major);
+	}
+	// Copy, paste, and modify your old printArray
+	// code here for year-major student records
+}
+#endif
+
+void freeRecords(student *x[]) {
+
+	int i;
+	for (i = 0; i < SIZE; i++) {
+		free(x[i]);
+	}
+}
+
+int main() {
+
+	student *roster[SIZE];
+
+	printf("Testing whatever sorting algorithm was selected \n");
+
+	// Load in the values from the file
+	getRecords(roster);
+
+	// Printing out the roster, in the initial order
+	printArray(roster);
+
+	// Sorting the array (hopefully)
+	sort(roster);
+
+	// Printing out the roster, in sorted order (hopefully)
+	printArray(roster);
+
+	// Free up the items in the array
+	freeRecords(roster);
+	return 0;
+}
+

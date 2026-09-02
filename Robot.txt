@@ -1,0 +1,179 @@
+Section 5 Adylov Anvar 
+Excursion C
+#include <stdio.h>
+#include <stdlib.h> 
+#include <math.h>
+#include <string.h>
+
+#define size 10
+
+typedef struct {
+	int heading; // 0 (west), 1 (north), 2 (east), 3 (south)
+	_Bool alive; // 1 (true) at game start, set to (false) when robot crashes
+}
+robot;
+
+void state_out(robot* site[10][10])
+{
+	int x, y;
+
+	for (y = 0; y<size; y++) {
+		for (x = 0; x<size; x++) {
+			if (site[x][y] != NULL) {
+				if ((*site[x][y]).alive) printf("R");
+				else printf("@");
+			}
+			else printf(".");
+		}
+		printf("%3i\n", y);
+	}
+	for (x = 0; x<size; x++)
+		printf("%i", x % 10);
+}
+
+
+_Bool is_valid(int x, int y) {
+	// checks if coordinate pair is on the grid
+	if ((x >= 0) && (x<size) && (y >= 0) && (y<size)) return 1;
+	else return 0;
+}
+void turnright(robot* player) {
+	if (player->heading == 3) {
+		player->heading = 0;
+	}
+	else {
+		player->heading = player->heading + 1;
+	}
+}
+void turnleft(robot* player) {
+	if (player->heading == 0) {
+		player->heading = 3;
+	}
+	else {
+		player->heading = player->heading - 1;
+	}
+}
+
+int main()
+{
+	robot* site[size][size];
+	robot* osr;
+	int nrobs;
+	int i, j, k;
+	int x, y, xn, yn;
+	char aletter;
+
+	// initialize array of sites with NULLs
+	for (j = 0; j<size; j++)
+	for (k = 0; k<size; k++)
+		site[j][k] = NULL;
+
+
+	nrobs = 10;
+
+
+	// In the following line, replace NULL 
+	// by the correct malloc instruction 
+	// to obtain memory for nrobs robots 
+
+	osr = (robot*)malloc(nrobs*sizeof(robot));
+
+	// initialize robots
+	for (i = 0; i<nrobs; i++)
+	{
+		(*(osr + i)).heading = rand() % 4;
+		(*(osr + i)).alive = 1;
+		do
+		{
+			j = rand() % size;
+			k = rand() % size;
+		} while (site[j][k] != NULL);
+		site[j][k] = osr + i;
+	}
+	// main loop of the game
+	do
+	{
+		state_out(site);
+		// obtain user input (move)    
+		do
+		{
+			printf("\n input action and coordinates, please: ");
+			scanf(" %c %i %i", &aletter, &x, &y);
+		} while (!is_valid(x, y));
+		// WRITE CODE HERE 
+		// to execute the move entered by the user
+		if (site[x][y] != NULL) {
+			for (i = 0; i < nrobs; i++) {
+				if (site[x][y] == osr + i) {
+					// To move forward
+					if (aletter == 'F' && (osr + i)->alive) {
+						if ((osr + i)->heading == 0) {
+							if (is_valid(x + 1, y)) {
+								if (site[x + 1][y] == NULL) {
+									site[x + 1][y] = (osr + i);
+									site[x][y] = NULL;
+								}
+								else if (site[x + 1][y] != NULL) {
+									printf("Crash!");
+									site[x + 1][y]->alive = 0;
+									site[x][y]->alive = 0;
+								}
+							}
+						}
+						else if ((osr + i)->heading == 1) {
+							if (is_valid(x, y + 1)) {
+								if (site[x][y + 1] != NULL) {
+									printf("Crash!");
+									site[x][y + 1]->alive = 0;
+									site[x][y]->alive = 0;
+								}
+								else if (site[x][y + 1] == NULL) {
+									site[x][y + 1] = (osr + i);
+									site[x][y] = NULL;
+								}
+							}
+						}
+						else if ((osr + i)->heading == 2) {
+							if (is_valid(x - 1, y)) {
+								if (site[x - 1][y] != NULL) {
+									printf("Crash!");
+									site[x - 1][y]->alive = 0;
+									site[x][y]->alive = 0;
+								}
+								else if (site[x - 1][y] == NULL) {
+									site[x - 1][y] = (osr + i);
+									site[x][y] = NULL;
+								}
+							}
+						}
+						else if ((osr + i)->heading == 3) {
+							if (is_valid(x, y - 1)) {
+								if (site[x][y - 1] != NULL) {
+								printf("Crash!");
+									site[x][y - 1]->alive = 0;
+									site[x][y]->alive = 0;
+								}
+								else if (site[x][y - 1] == NULL) {
+									site[x][y - 1] = (osr + i);
+									site[x][y] = NULL;
+								}
+							}
+						}
+					}
+					///////////////
+					if (aletter == 'R') {
+						turnright(osr + i);
+					}
+					if (aletter == 'L') {
+						turnleft(osr + i);
+					}
+				}
+			}
+		}
+
+	
+	} while (aletter != 'Q');
+	free(osr);
+	return 0;
+}
+

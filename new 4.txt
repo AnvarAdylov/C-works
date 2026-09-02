@@ -1,0 +1,55 @@
+#include <stdlib.h>
+#include <stdio.h>
+ 
+typedef struct _list {
+	double value;
+	struct _list* forward;
+	struct _list* back;
+} list;
+ 
+void printList(doubleNode *node) {
+ 	if (node != NULL) {
+		printf("%f ", node->value);
+		printList(node->forward);
+	}
+}
+ 
+void freeAll(doubleNode *node) {
+ 	if (node != NULL) {
+		freeAll(node->link);
+		printf("Freeing up %f \n", node->value);
+		free(node);
+	}
+}
+ 
+int main(void) {
+ 
+	setvbuf(stdout, NULL, _IONBF, 0);
+ 
+	list *first = NULL;
+	list *curr = NULL;
+	list *last = NULL;
+ 
+	do {
+	 	list *newNode = malloc(sizeof(list));
+ 		
+		newNode->value = x;
+		newNode->forward = NULL;
+ 
+		if (first == NULL) {
+			first = newNode;
+			newNode->back = NULL; 
+		} else {
+			curr->forward = newNode;
+			newNode->back = curr;
+		}
+ 		curr = newNode;
+		last = curr;
+	} while (curr->forward != NULL);
+	
+	printList(first);
+ 	printf("Done.");
+ 	freeAll(first);
+ 
+	return 0;
+}
