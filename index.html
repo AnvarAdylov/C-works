@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Early Programming Work · Anvar Adylov</title>
+  <style>
+    :root { --bg:#f7f7f8; --fg:#1d1d1f; --muted:#6b6b76; --card:#fff; --line:#e4e4e8; --accent:#2f6fec; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#141416; --fg:#ececf1; --muted:#9a9aa6; --card:#1e1e22; --line:#2e2e34; --accent:#7aa5ff; } }
+    * { box-sizing:border-box; }
+    body { margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); }
+    main { max-width:1000px; margin:0 auto; padding:48px 16px; }
+    h1 { margin:0 0 8px; font-size:2rem; }
+    .lead { color:var(--muted); margin:0 0 32px; max-width:60ch; }
+    h2 { font-size:1.1rem; margin:40px 0 12px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; }
+    .card { display:block; padding:16px; background:var(--card); border:1px solid var(--line); border-radius:10px; color:inherit; text-decoration:none; transition:border-color .15s; }
+    .card:hover { border-color:var(--accent); }
+    .card h3 { margin:6px 0 4px; font-size:1rem; }
+    .card p { margin:0; color:var(--muted); font-size:.9rem; }
+    .tag { font-size:.75rem; color:var(--accent); text-transform:uppercase; letter-spacing:.04em; }
+    ul { padding-left:20px; } li { margin:4px 0; }
+    a { color:var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Early Programming Work</h1>
+  <p class="lead">My first programming course: C exercises, plus a 3D desktop built with three.js. The web pieces below run live in the browser.</p>
+  <h2>Web projects (live)</h2>
+  <div class="grid">
+      <a class="card" href="web/3d-desktop/Improved/indexTest.html"><span class="tag">Main project</span><h3>3D Desktop</h3><p>A three.js room with a desk and a stack of notes. Drag to orbit, scroll to zoom.</p></a>
+      <a class="card" href="web/3d-desktop/indexTest.html"><span class="tag">Prototype</span><h3>3D Desktop (first version)</h3><p>The earlier prototype of the same scene.</p></a>
+      <a class="card" href="web/3d-desktop/canvas_geometry_cube.html"><span class="tag">Experiment</span><h3>Spinning cube</h3><p>A three.js geometry experiment.</p></a>
+      <a class="card" href="web/3d-desktop/misc_controls_trackball.html"><span class="tag">Experiment</span><h3>Trackball controls</h3><p>Testing camera controls for the desktop scene.</p></a>
+      <a class="card" href="web/3d-desktop/first-threejs-app.html"><span class="tag">Experiment</span><h3>First three.js app</h3><p>The very first three.js scene.</p></a>
+      <a class="card" href="web/countries/Countries.html"><span class="tag">HTML</span><h3>Countries</h3><p>A photo gallery page about four countries.</p></a>
+      <a class="card" href="web/first-site.html"><span class="tag">HTML</span><h3>First site</h3><p>The first HTML page.</p></a>
+  </div>
+  <h2>C exercises (code on GitHub)</h2>
+  <ul>
+    <li><a href="https://github.com/AnvarAdylov/C-works/tree/main/c-lessons">c-lessons</a> · lesson tasks and assignments: strings, arrays, functions, a minesweeper and a number-guessing game</li>
+    <li><a href="https://github.com/AnvarAdylov/C-works/tree/main/materials">materials</a> · worksheets and course documents</li>
+  </ul>
+</main>
+</body>
+</html>
